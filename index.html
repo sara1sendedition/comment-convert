@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Comment Convert — The high-intent comment inbox for creators</title>
+  <meta name="description" content="Comment Convert turns your overflowing YouTube and TikTok comments into a prioritized inbox, then drafts replies in your own voice. You stay in control of what gets sent."/>
+  <link rel="icon" type="image/svg+xml" href="/logo.svg"/>
+  <meta property="og:title" content="Comment Convert — High-intent comment inbox for creators"/>
+  <meta property="og:description" content="Stop missing the comments that matter. Comment Convert prioritizes high-intent threads and drafts replies in your voice."/>
+  <meta property="og:type" content="website"/>
+  <style>
+    :root{
+      --bg:#05050A;
+      --bg-2:#0B0B14;
+      --ink:#F5F6FF;
+      --muted:#9AA0BE;
+      --line:rgba(255,255,255,0.08);
+      --blue:#5BC0FF;
+      --indigo:#5B7FFF;
+      --purple:#A45BFF;
+      --grad: linear-gradient(135deg,#5BC0FF 0%,#5B7FFF 50%,#A45BFF 100%);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.55}
+    a{color:inherit;text-decoration:none}
+    img,svg{display:block;max-width:100%}
+    .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+
+    /* Background glow */
+    body{
+      background:
+        radial-gradient(900px 500px at 80% -10%, rgba(91,127,255,0.25), transparent 60%),
+        radial-gradient(700px 400px at 10% 10%, rgba(164,91,255,0.18), transparent 60%),
+        var(--bg);
+    }
+
+    /* Nav */
+    header.nav{position:sticky;top:0;z-index:10;backdrop-filter:saturate(180%) blur(14px);background:rgba(5,5,10,0.6);border-bottom:1px solid var(--line)}
+    .nav-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-0.01em}
+    .brand svg{width:32px;height:32px}
+    .brand-name{font-size:17px}
+    .nav a.cta{padding:10px 16px;border-radius:999px;background:var(--grad);color:#0A0A14;font-weight:700;font-size:14px}
+    .nav-links{display:flex;gap:22px;font-size:14px;color:var(--muted)}
+    .nav-links a:hover{color:var(--ink)}
+    @media(max-width:680px){.nav-links{display:none}}
+
+    /* Hero */
+    .hero{padding:96px 0 56px;text-align:center}
+    .eyebrow{display:inline-block;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);padding:6px 12px;border:1px solid var(--line);border-radius:999px;margin-bottom:24px}
+    h1{font-size:clamp(38px,6vw,68px);line-height:1.05;letter-spacing:-0.025em;margin:0 0 22px;font-weight:800}
+    h1 .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .lede{font-size:clamp(17px,1.6vw,20px);color:var(--muted);max-width:680px;margin:0 auto 36px}
+    .cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:18px}
+    .btn{padding:14px 22px;border-radius:12px;font-weight:600;font-size:15px;display:inline-flex;align-items:center;gap:8px;cursor:pointer;border:0;font-family:inherit}
+    .btn.primary{background:var(--grad);color:#0A0A14}
+    .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+    .btn.ghost:hover{border-color:rgba(255,255,255,0.25)}
+    .micro{color:var(--muted);font-size:13px}
+
+    /* Hero mock */
+    .mock{margin:60px auto 0;max-width:920px;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));box-shadow:0 30px 80px -20px rgba(0,0,0,0.6),0 0 0 1px rgba(255,255,255,0.02)}
+    .mock-bar{display:flex;gap:6px;padding:12px 14px;border-bottom:1px solid var(--line)}
+    .mock-bar span{width:11px;height:11px;border-radius:50%;background:#272838}
+    .mock-grid{display:grid;grid-template-columns:280px 1fr;min-height:380px}
+    @media(max-width:680px){.mock-grid{grid-template-columns:1fr}.mock-side{display:none}}
+    .mock-side{border-right:1px solid var(--line);padding:14px}
+    .mock-side h4{margin:0 0 12px;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted)}
+    .row{display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:8px;font-size:13px;color:var(--muted)}
+    .row.active{background:rgba(91,127,255,0.12);color:var(--ink)}
+    .dot{width:8px;height:8px;border-radius:50%;background:var(--grad);flex:none}
+    .mock-main{padding:22px}
+    .thread{border-bottom:1px solid var(--line);padding:14px 0}
+    .thread:last-child{border:0}
+    .thread .who{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+    .ava{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#5B7FFF,#A45BFF);font-size:12px;display:grid;place-items:center;color:#fff;font-weight:700}
+    .name{font-weight:600;font-size:14px}
+    .tag{font-size:10px;padding:3px 8px;border-radius:999px;background:rgba(91,127,255,0.18);color:#B8C5FF;letter-spacing:0.04em;text-transform:uppercase}
+    .tag.warm{background:rgba(164,91,255,0.18);color:#D5BFFF}
+    .body{color:var(--muted);font-size:14px;margin-left:36px}
+    .draft{margin:10px 0 0 36px;padding:12px 14px;border:1px dashed rgba(255,255,255,0.15);border-radius:10px;font-size:13px;color:var(--ink);background:rgba(91,127,255,0.06)}
+    .draft .label{font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+
+    /* Sections */
+    section{padding:88px 0;border-top:1px solid var(--line)}
+    .kicker{font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+    h2{font-size:clamp(28px,3.6vw,40px);line-height:1.15;letter-spacing:-0.02em;margin:0 0 16px;font-weight:800}
+    .sub{color:var(--muted);font-size:17px;max-width:640px}
+
+    .grid{display:grid;gap:18px;grid-template-columns:repeat(3,1fr);margin-top:48px}
+    @media(max-width:880px){.grid{grid-template-columns:1fr}}
+    .card{padding:26px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,0.025),rgba(255,255,255,0.005))}
+    .card .ico{width:38px;height:38px;border-radius:10px;background:var(--grad);display:grid;place-items:center;margin-bottom:18px;color:#0A0A14;font-weight:800}
+    .card h3{margin:0 0 8px;font-size:18px}
+    .card p{margin:0;color:var(--muted);font-size:15px}
+
+    /* Steps */
+    .steps{display:grid;gap:18px;grid-template-columns:repeat(3,1fr);margin-top:48px;counter-reset:step}
+    @media(max-width:880px){.steps{grid-template-columns:1fr}}
+    .step{padding:28px;border:1px solid var(--line);border-radius:16px;position:relative}
+    .step::before{counter-increment:step;content:counter(step);position:absolute;top:-18px;left:24px;width:34px;height:34px;border-radius:10px;background:var(--grad);color:#0A0A14;font-weight:800;display:grid;place-items:center;font-size:15px}
+    .step h3{margin:8px 0 8px;font-size:18px}
+    .step p{margin:0;color:var(--muted);font-size:15px}
+
+    /* Trust callout */
+    .trust{margin-top:52px;border:1px solid var(--line);border-radius:18px;padding:30px 32px;display:flex;gap:18px;align-items:flex-start;background:linear-gradient(180deg,rgba(91,127,255,0.06),rgba(164,91,255,0.04))}
+    .trust .ico{flex:none;width:42px;height:42px;border-radius:12px;background:var(--grad);display:grid;place-items:center;font-weight:800;color:#0A0A14}
+    .trust h3{margin:0 0 8px;font-size:18px}
+    .trust p{margin:0;color:var(--muted);font-size:15px}
+
+    /* FAQ */
+    details{border:1px solid var(--line);border-radius:14px;padding:18px 22px;margin-bottom:12px;background:rgba(255,255,255,0.02)}
+    details[open]{background:rgba(91,127,255,0.05)}
+    summary{cursor:pointer;font-weight:600;list-style:none}
+    summary::-webkit-details-marker{display:none}
+    summary::after{content:"+";float:right;color:var(--muted);transition:transform 0.2s}
+    details[open] summary::after{content:"−"}
+    details p{color:var(--muted);margin:14px 0 0;font-size:15px}
+
+    /* CTA section */
+    .final{text-align:center;padding:120px 0}
+    .final h2{margin-bottom:14px}
+    form.waitlist{margin:32px auto 0;max-width:480px;display:flex;gap:8px;flex-wrap:wrap}
+    form.waitlist input[type=email]{flex:1;min-width:220px;padding:14px 16px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,0.04);color:var(--ink);font-size:15px;font-family:inherit}
+    form.waitlist input[type=email]:focus{outline:none;border-color:rgba(91,127,255,0.6)}
+    form.waitlist button{flex:none}
+    .form-note{margin-top:14px;font-size:13px;color:var(--muted)}
+    .thanks{display:none;margin-top:18px;padding:14px 18px;border-radius:12px;background:rgba(91,127,255,0.12);color:var(--ink);font-size:15px}
+    .thanks.show{display:block}
+
+    /* Footer */
+    footer{border-top:1px solid var(--line);padding:48px 0 60px;color:var(--muted);font-size:14px}
+    .foot{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+    .foot-links{display:flex;gap:22px}
+    .foot-links a:hover{color:var(--ink)}
+  </style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-row">
+    <a class="brand" href="/">
+      <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs><linearGradient id="lg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#5BC0FF"/><stop offset="55%" stop-color="#5B7FFF"/><stop offset="100%" stop-color="#A45BFF"/>
+        </linearGradient></defs>
+        <path d="M250 270 L640 270 Q720 270 720 350 L720 560 Q720 640 640 640 L360 640 L280 740 L290 640 Q230 638 230 580 L230 350 Q230 270 310 270 Z" fill="none" stroke="url(#lg)" stroke-width="38" stroke-linejoin="round"/>
+        <line x1="305" y1="400" x2="640" y2="400" stroke="url(#lg)" stroke-width="34" stroke-linecap="round"/>
+        <line x1="305" y1="475" x2="600" y2="475" stroke="url(#lg)" stroke-width="34" stroke-linecap="round"/>
+        <line x1="305" y1="550" x2="540" y2="550" stroke="url(#lg)" stroke-width="34" stroke-linecap="round"/>
+        <line x1="720" y1="455" x2="900" y2="455" stroke="url(#lg)" stroke-width="38" stroke-linecap="round"/>
+        <polyline points="830,395 900,455 830,515" fill="none" stroke="url(#lg)" stroke-width="38" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="brand-name">Comment Convert</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#features">Features</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="cta" href="#waitlist">Get early access</a>
+  </div>
+</header>
+
+<main>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">For creators drowning in comments</span>
+    <h1>The comments that matter,<br/><span class="grad">finally rise to the top.</span></h1>
+    <p class="lede">Comment Convert pulls your YouTube and TikTok comments into one inbox, surfaces the high‑intent ones, and drafts replies in your voice. You review, edit, and decide what gets sent.</p>
+    <div class="cta-row">
+      <a class="btn primary" href="#waitlist">Join the early access list →</a>
+      <a class="btn ghost" href="#how">See how it works</a>
+    </div>
+    <p class="micro">No credit card. No auto‑replies. You stay in control.</p>
+
+    <!-- Mock UI -->
+    <div class="mock" aria-hidden="true">
+      <div class="mock-bar"><span></span><span></span><span></span></div>
+      <div class="mock-grid">
+        <aside class="mock-side">
+          <h4>Inbox</h4>
+          <div class="row active"><span class="dot"></span>High intent</div>
+          <div class="row">Questions</div>
+          <div class="row">Praise</div>
+          <div class="row">Needs review</div>
+          <div class="row">Archived</div>
+        </aside>
+        <div class="mock-main">
+          <div class="thread">
+            <div class="who"><div class="ava">M</div><div class="name">@maya.builds</div><span class="tag">High intent</span></div>
+            <div class="body">"Where do I sign up for the workshop you mentioned at the end?"</div>
+            <div class="draft">
+              <div class="label">Drafted in your voice</div>
+              Hey Maya — so glad you asked. Doors open Friday at 9am PT. I'll DM you the link the moment it's live so you don't miss it.
+            </div>
+          </div>
+          <div class="thread">
+            <div class="who"><div class="ava">J</div><div class="name">@jpark</div><span class="tag warm">Warm lead</span></div>
+            <div class="body">"Been watching for months. Considering the Pro tier — does it include the templates?"</div>
+          </div>
+          <div class="thread">
+            <div class="who"><div class="ava">K</div><div class="name">@kacie.oh</div><span class="tag">Question</span></div>
+            <div class="body">"What mic are you using in this one? Sounds way better than last week."</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="wrap">
+    <div class="kicker">What it does</div>
+    <h2>Built for the comments<br/>that move the needle.</h2>
+    <p class="sub">Most creators read maybe 10% of their comments — and the most valuable ones (real questions, warm leads, repeat fans) get buried. Comment Convert fixes that.</p>
+
+    <div class="grid">
+      <div class="card">
+        <div class="ico">★</div>
+        <h3>One inbox, every comment</h3>
+        <p>Pull comments from your channels into a single, searchable inbox. No more bouncing between tabs and apps.</p>
+      </div>
+      <div class="card">
+        <div class="ico">↑</div>
+        <h3>High‑intent first</h3>
+        <p>Threads with real questions, strong engagement, or buying signals surface to the top. The fluff falls away.</p>
+      </div>
+      <div class="card">
+        <div class="ico">✎</div>
+        <h3>Drafts in your voice</h3>
+        <p>Trained on examples you approve — not generic templates. Each suggestion sounds like you actually wrote it.</p>
+      </div>
+      <div class="card">
+        <div class="ico">⌘</div>
+        <h3>Keyboard‑fast review</h3>
+        <p>Approve, edit, or skip with a single key. Get through 200 comments in the time it used to take to read 20.</p>
+      </div>
+      <div class="card">
+        <div class="ico">⊕</div>
+        <h3>Tag and triage</h3>
+        <p>Mark warm leads, questions, sponsorship inquiries, and repeat viewers. Filter when you need to follow up.</p>
+      </div>
+      <div class="card">
+        <div class="ico">⌖</div>
+        <h3>You stay in control</h3>
+        <p>Nothing posts on your behalf unless you explicitly choose to send. No silent auto‑replies. Ever.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="wrap">
+    <div class="kicker">How it works</div>
+    <h2>From overwhelmed to caught up,<br/>in three steps.</h2>
+
+    <div class="steps">
+      <div class="step">
+        <h3>Connect your channels</h3>
+        <p>Sign in with the platforms you create on. We use official login (no scraping, no password sharing).</p>
+      </div>
+      <div class="step">
+        <h3>Let the inbox sort itself</h3>
+        <p>Comment Convert scores and groups your incoming comments so the highest‑value threads sit at the top of your inbox.</p>
+      </div>
+      <div class="step">
+        <h3>Review drafts, hit send</h3>
+        <p>Skim AI‑drafted replies in your voice. Edit anything you want, then send — or copy out and reply manually.</p>
+      </div>
+    </div>
+
+    <div class="trust">
+      <div class="ico">✓</div>
+      <div>
+        <h3>Built around human review, not silent automation</h3>
+        <p>Comment Convert never posts replies on your behalf without your explicit action. Your audience gets you — just faster, and to more of them.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="wrap" style="max-width:780px">
+    <div class="kicker">Common questions</div>
+    <h2>Everything you'd want to ask before connecting an account.</h2>
+
+    <div style="margin-top:36px">
+      <details>
+        <summary>Will Comment Convert post replies for me automatically?</summary>
+        <p>No. Comment Convert generates draft replies for you to review. Nothing is published unless you explicitly take action — and even then, it's only on platforms whose APIs support that, with your prior consent.</p>
+      </details>
+      <details>
+        <summary>What data does Comment Convert access?</summary>
+        <p>The minimum needed to do its job: your basic account info from your platform login, and the comments on content you own or have authorized us to read. We don't access your DMs, video drafts, or analytics that aren't required for the inbox to function. Full details are in our <a href="/privacy">Privacy Policy</a>.</p>
+      </details>
+      <details>
+        <summary>How does the AI learn my voice?</summary>
+        <p>By looking at example replies you mark as "yes, that sounds like me." Drafts improve as you use the product. We don't train on your data to build models for other customers.</p>
+      </details>
+      <details>
+        <summary>Can I disconnect my account at any time?</summary>
+        <p>Yes. You can revoke access from inside Comment Convert or from your platform's connected‑apps settings. When you do, we delete the access tokens immediately and your stored comment data on the schedule outlined in our Privacy Policy.</p>
+      </details>
+      <details>
+        <summary>Which platforms are supported?</summary>
+        <p>YouTube is live in early access. TikTok is in active development — we're working through TikTok's app review process now, which is why you're reading this page.</p>
+      </details>
+      <details>
+        <summary>How much does it cost?</summary>
+        <p>Early access is free while we get the experience right. We'll share pricing well before any plan goes paid, and early access users get founder pricing.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- WAITLIST CTA -->
+<section class="final" id="waitlist">
+  <div class="wrap">
+    <div class="kicker">Get early access</div>
+    <h2>Be first in when we open <span class="grad">TikTok</span>.</h2>
+    <p class="sub" style="margin:0 auto">We're rolling out access in small batches. Drop your email and we'll send you a link the moment your slot opens.</p>
+
+    <form class="waitlist" name="waitlist" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="window.__cc_thanks=true">
+      <input type="hidden" name="form-name" value="waitlist"/>
+      <p style="display:none"><label>Don't fill this out: <input name="bot-field"/></label></p>
+      <input type="email" name="email" placeholder="you@youraddress.com" required/>
+      <button class="btn primary" type="submit">Join waitlist</button>
+    </form>
+    <p class="form-note">We'll only email you about Comment Convert. Unsubscribe anytime.</p>
+    <div class="thanks" id="thanks">Thanks — you're on the list. We'll be in touch soon.</div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>© <span id="yr">2026</span> Comment Convert · A BuildDaily product</div>
+    <div class="foot-links">
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+      <a href="mailto:hello@commentconvert.com">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  // If the form was submitted and the page reloaded with Netlify's success param,
+  // show the thanks message. Netlify also has a built-in success page; this is a fallback.
+  if (location.search.indexOf('success=true') !== -1) {
+    document.getElementById('thanks').classList.add('show');
+  }
+</script>
+</body>
+</html>

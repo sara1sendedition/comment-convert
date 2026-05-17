@@ -1,0 +1,21 @@
+# Netlify build config for Comment Convert
+# Pure static site — no build step, just serve the repo root.
+
+[build]
+  publish = "."
+
+# Pretty URLs are on by default, so /privacy → privacy.html
+# and /terms → terms.html with no extra config.
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+[[headers]]
+  for = "/logo.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

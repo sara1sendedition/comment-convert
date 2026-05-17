@@ -1,0 +1,26 @@
+# macOS
+.DS_Store
+._*
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*~
+
+# Env / secrets
+.env
+.env.local
+.env.*.local
+
+# Dependencies (in case the project grows)
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Build artifacts
+dist/
+build/
+.netlify/
