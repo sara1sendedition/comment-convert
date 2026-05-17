@@ -1,9 +1,6 @@
 # What NOT to send into the Docker build context
 .git/
 .gitignore
-Dockerfile
-.dockerignore
-nginx.conf
 netlify.toml
 README.md
 push.command
