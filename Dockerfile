@@ -7,7 +7,7 @@ FROM nginx:alpine
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Only copy the static assets that should be public — no Dockerfile, no .git, no README
-COPY index.html privacy.html terms.html logo.svg /usr/share/nginx/html/
+COPY index.html privacy.html terms.html logo.svg robots.txt sitemap.xml /usr/share/nginx/html/
 
 EXPOSE 80
 
